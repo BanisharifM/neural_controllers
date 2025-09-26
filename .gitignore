@@ -31,3 +31,5 @@ notebooks/politics.ipynb
 notebooks/harmful.ipynb
 .env
 *.env
+model_cache/
+models/
