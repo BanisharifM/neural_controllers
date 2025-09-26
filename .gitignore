@@ -11,7 +11,7 @@ quantitative_comparisons/analysis/*plots
 scripts/*
 hidden_states/*
 figures/*
-*/*.out
+# */*.out
 */v1
 */*/v1
 results_*
