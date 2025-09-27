@@ -17,7 +17,7 @@ wandb.init(
     config={
         "test": "coefficient_sweep",
         "model": "Llama-3.1-8B",
-        "control_method": "logistic"
+        "control_method": "rfm"
     }
 )
 
@@ -33,7 +33,7 @@ model = AutoModelForCausalLM.from_pretrained(
 )
 
 # Create controller and load saved directions
-controller = NeuralController(model, tokenizer, control_method='logistic')
+controller = NeuralController(model, tokenizer, control_method='rfm')
 controller.load(concept='poetry', model_name='llama_3_8b_it', 
                 path=os.path.join(base_dir, 'my_files/directions/'))
 
@@ -42,7 +42,7 @@ prompt = "Tell me about the weather"
 formatted = controller.format_prompt(prompt)
 
 results = []
-for coef in [0, 0.7, 1.0, 1.5, 2.0]:
+for coef in [0, 0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0]:
     output = controller.generate(
         formatted,
         layers_to_control=list(range(-1, -31, -1)) if coef > 0 else [],
@@ -56,7 +56,7 @@ for coef in [0, 0.7, 1.0, 1.5, 2.0]:
     # Log each result
     wandb.log({
         f"coefficient_{coef}": {
-            "output": output[:1000],  # First 500 chars
+            "output": output[:1000],  # First 1000 chars
             "control_strength": coef
         }
     })

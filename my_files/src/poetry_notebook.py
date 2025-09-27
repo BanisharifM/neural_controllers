@@ -21,7 +21,7 @@ wandb.init(
     name=f"poetry-style-{os.environ.get('SLURM_JOB_ID', 'local')}",
     config={
         "model": "Llama-3.1-8B",
-        "control_method": "logistic",
+        "control_method": "rfm",
         "task": "poetry_style_transfer",
         "rfm_iters": 8,
         "batch_size": 2
@@ -78,7 +78,7 @@ for concept_type in tqdm(concept_types, desc="Training"):
         tokenizer,
         rfm_iters=8,
         batch_size=2,
-        control_method='logistic'
+        control_method='rfm'
     )
     
     print(f"\n  Computing directions for {concept_type}...")
